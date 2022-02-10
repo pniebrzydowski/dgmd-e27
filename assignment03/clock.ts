@@ -9,10 +9,7 @@ class ErrorLogger implements Logger {
 }
 
 class Clock {
-  private clockContainer: HTMLElement;
-  constructor(clockContainer: HTMLElement) {
-    this.clockContainer = clockContainer;
-  }
+  constructor(private clockContainer: HTMLElement) {}
 
   private getCurrentTime = (): Date => new Date();
   
