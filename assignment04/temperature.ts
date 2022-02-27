@@ -18,7 +18,13 @@ class TempInput {
   }
 }
 
-abstract class TemperatureConverter {
+interface Converter {
+  setInputValue: (value: number) => void;
+  toggleActive: () => void;
+  convert: () => number | null;
+}
+
+abstract class TemperatureConverter implements Converter {
   constructor(protected tempInput: TempInput) {}
   setInputValue = (value: number): void => {
     this.tempInput.setValue(value);
