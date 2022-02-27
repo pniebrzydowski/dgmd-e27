@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Temperature Converter (OOP): DGMD E-27 Module 4 Assignment - Patrick Niebrzydowski</title>
+    <link href="./temperature.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div id="container">
+      <form id="conversion-form">  
+        <div class="input-wrapper">
+          <div class="input-container input-container-active">
+            <input type="number" name="temp-value-f" class="temp-input" id="temp-input-f" />
+            <span class="form-conversion-unit">&deg;F</span>
+          </div>
+          <span class="equal-sign">=</span>
+          <div class="input-container">
+            <input class="temp-input" name="temp-input-c" id="temp-input-c" readonly />
+            <span class="conversion-unit">&deg;C</span>
+          </div>
+        </div>
+        
+        <div class="action-btns">
+          <button class="toggle-btn" id="toggle-btn" type="button">Flip</button>
+          <button class="submit-btn" type="submit">Convert</button>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="./temperature.js"></script>
+  </body>
+</html>
