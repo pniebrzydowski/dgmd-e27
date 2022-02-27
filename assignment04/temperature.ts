@@ -51,7 +51,6 @@ class ConverterFtoC extends TemperatureConverter {
 }
 
 class ConversionForm {
-  private $formEl: HTMLFormElement;
   private converterCtoF: TemperatureConverter;
   private converterFtoC: TemperatureConverter;
   private activeConverter: TemperatureConverter;
@@ -65,7 +64,6 @@ class ConversionForm {
       throw new Error('Could not instantiate ConversionForm class, one of the required HTML elements is missing');
     }
   
-    this.$formEl = $formEl;
     const tempInputC = new TempInput($inputElC);
     const tempInputF = new TempInput($inputElF);
     this.converterCtoF = new ConverterCtoF(tempInputC);
@@ -99,7 +97,8 @@ class ConversionForm {
   }
 
   addEventListeners = () => {
-    this.$formEl.addEventListener('submit', this.submit);
+    const $formEl = document.getElementById('conversion-form') as HTMLFormElement;
+    $formEl.addEventListener('submit', this.submit);
     const $toggleBtn = document.getElementById('toggle-btn') as HTMLInputElement;
     $toggleBtn.addEventListener('click', this.toggleConverter);
   }

@@ -79,7 +79,8 @@ class ConversionForm {
             this.inactiveConverter.setInputValue(convertedValue);
         };
         this.addEventListeners = () => {
-            this.$formEl.addEventListener('submit', this.submit);
+            const $formEl = document.getElementById('conversion-form');
+            $formEl.addEventListener('submit', this.submit);
             const $toggleBtn = document.getElementById('toggle-btn');
             $toggleBtn.addEventListener('click', this.toggleConverter);
         };
@@ -89,7 +90,6 @@ class ConversionForm {
         if (!$formEl || !$inputElC || !$inputElF) {
             throw new Error('Could not instantiate ConversionForm class, one of the required HTML elements is missing');
         }
-        this.$formEl = $formEl;
         const tempInputC = new TempInput($inputElC);
         const tempInputF = new TempInput($inputElF);
         this.converterCtoF = new ConverterCtoF(tempInputC);
