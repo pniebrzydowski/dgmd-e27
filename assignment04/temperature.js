@@ -8,6 +8,9 @@ class TempInput {
         };
         this.toggleActive = () => {
             this.$inputElement.readOnly = !this.$inputElement.readOnly;
+            if (!this.$inputElement.readOnly) {
+                this.$inputElement.focus();
+            }
             const $parent = this.$inputElement.parentElement;
             if (!$parent) {
                 return;
