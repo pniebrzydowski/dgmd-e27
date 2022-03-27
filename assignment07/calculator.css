@@ -1,26 +1,58 @@
+html {
+  background-color: #666;
+}
+
 body {
   margin: 0;
   padding: 16px;
+  font-size: 14px;
 }
 
-#container {
+@media screen and (min-width: 480px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+.calculator {
   text-align: center;
   margin: 0 auto;
   width: 100%;
-  max-width: 560px;
+  max-width: 480px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
 
-#container input {
+.calculator input {
   grid-column-start: 1;
   grid-column-end: 5;
   grid-row-start: 1;
   grid-row-end: 1;
 }
 
-#container > div {
+.calculator > div {
   width: 100%;
+}
+
+.calculator button,
+.calculator input {
+  appearance: none;
+  background-color: #333;
+  border: 1px solid #444;
+  padding: 8px 16px;
+  height: calc(25vw - 8px);
+  max-height: 80px;
+  color: #fff;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.calculator button {
+  cursor: pointer;
+}
+
+.calculator input {
+  text-align: right;
 }
 
 .buttons-special {
@@ -32,6 +64,10 @@ body {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.button-special button {
+  background-color: #ddd;
+}
+
 .buttons-operators {
   grid-column-start: 4;
   grid-column-end: 5;
@@ -41,6 +77,10 @@ body {
   grid-template-rows: repeat(5, 1fr);
 }
 
+.buttons-operators button {
+  background-color: rgb(224, 90, 0);
+}
+
 .buttons-numbers {
   grid-column-start: 1;
   grid-column-end: 4;
@@ -48,4 +88,8 @@ body {
   grid-row-end: 5;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+}
+
+.buttons-numbers button {
+  background-color: #555;
 }
