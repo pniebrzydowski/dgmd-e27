@@ -6,4 +6,46 @@ body {
 #container {
   text-align: center;
   margin: 0 auto;
+  width: 100%;
+  max-width: 560px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#container input {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+
+#container > div {
+  width: 100%;
+}
+
+.buttons-special {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.buttons-operators {
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 5;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.buttons-numbers {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
