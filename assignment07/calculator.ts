@@ -11,8 +11,8 @@ function Calculation(target: Calculator, key: string, descriptor: any) {
   descriptor.value = function(...args: any[]) {
     if (this.currentOperation !== Operation.Equals) {
       this.evaluate();
-    }
-    
+    };
+
     this.currentValue = Number(this.currentInput);
     this.isNumberEntry = false;
     return originalOperation.apply(this, args);
@@ -167,22 +167,28 @@ class Calculator {
 
   @UpdateValue
   evaluate() {
+    let value = this.currentValue;
     switch (this.currentOperation) {
       case Operation.Add:
-        this.currentValue += Number(this.currentInput);
+        value += Number(this.currentInput);
         break;
       case Operation.Subtract:
-        this.currentValue -= Number(this.currentInput);
+        value -= Number(this.currentInput);
         break;
       case Operation.Multiply:
-        this.currentValue *= Number(this.currentInput);
+        value *= Number(this.currentInput);
         break;
       case Operation.Divide:
-        this.currentValue /= Number(this.currentInput);
+        value /= Number(this.currentInput);
         break;
       default:
         break;
     }
+    if (value === Infinity) {
+      alert('Infinity!');
+      return;
+    }
+    this.currentValue = value;
   }
 
   @Calculation

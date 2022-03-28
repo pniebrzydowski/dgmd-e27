@@ -11,6 +11,7 @@ function Calculation(target, key, descriptor) {
         if (this.currentOperation !== "=" /* Equals */) {
             this.evaluate();
         }
+        ;
         this.currentValue = Number(this.currentInput);
         this.isNumberEntry = false;
         return originalOperation.apply(this, args);
@@ -148,22 +149,28 @@ class Calculator {
         });
     }
     evaluate() {
+        let value = this.currentValue;
         switch (this.currentOperation) {
             case "+" /* Add */:
-                this.currentValue += Number(this.currentInput);
+                value += Number(this.currentInput);
                 break;
             case "-" /* Subtract */:
-                this.currentValue -= Number(this.currentInput);
+                value -= Number(this.currentInput);
                 break;
             case "*" /* Multiply */:
-                this.currentValue *= Number(this.currentInput);
+                value *= Number(this.currentInput);
                 break;
             case "/" /* Divide */:
-                this.currentValue /= Number(this.currentInput);
+                value /= Number(this.currentInput);
                 break;
             default:
                 break;
         }
+        if (value === Infinity) {
+            alert('Infinity!');
+            return;
+        }
+        this.currentValue = value;
     }
     onAdd() {
         this.currentOperation = "+" /* Add */;
