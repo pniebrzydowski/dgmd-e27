@@ -1,14 +1,56 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+function Calculation(target, key, descriptor) {
+    const originalOperation = descriptor.value;
+    descriptor.value = function (...args) {
+        console.log(key);
+        console.log(this.currentInput, this.currentValue, this.currentOperation);
+        if (this.currentOperation !== "=" /* Equals */) {
+            this.evaluate();
+        }
+        this.currentValue = Number(this.currentInput);
+        this.isNumberEntry = false;
+        return originalOperation.apply(this, args);
+    };
+    return descriptor;
+}
 class Calculator {
     constructor($container) {
         this.$container = $container;
         this.currentValue = 0;
-        this.currentInput = '';
+        this.currentInput = '0';
         this.currentOperation = "=" /* Equals */;
-        this.isNumberEntry = true;
+        this.isNumberEntry = false;
         this.$valueInput = this.$container.querySelector('input');
         this.initOperators();
         this.initNumbers();
+        this.initClearButton();
+    }
+    updateValueInput() {
+        this.$valueInput.value = this.currentInput;
+    }
+    clear() {
+        this.currentInput = '0';
+        this.currentValue = 0;
+        this.currentOperation = "=" /* Equals */;
+        this.isNumberEntry = false;
+        this.updateValueInput();
+    }
+    initClearButton() {
+        const $clearButton = document.getElementById('button-clear');
+        if (!$clearButton) {
+            console.log('Clear button not found!');
+            return;
+        }
+        $clearButton.addEventListener('click', () => {
+            console.log('clear button click');
+            this.clear();
+        });
     }
     initOperators() {
         const $operatorButtons = this.$container.querySelector('.buttons-operators');
@@ -40,7 +82,7 @@ class Calculator {
                     break;
                 case "=" /* Equals */:
                     $button.addEventListener('click', () => {
-                        this.evaluate();
+                        this.onEquals();
                     });
                     break;
             }
@@ -64,15 +106,11 @@ class Calculator {
                     this.currentInput = $button.innerHTML;
                     this.isNumberEntry = true;
                 }
-                this.updateCurrentValue();
+                this.updateValueInput();
             });
         });
     }
-    updateCurrentValue() {
-        this.$valueInput.value = this.currentInput;
-    }
     evaluate() {
-        console.log(this.currentInput, this.currentValue, this.currentOperation);
         switch (this.currentOperation) {
             case "+" /* Add */:
                 this.currentValue += Number(this.currentInput);
@@ -89,34 +127,40 @@ class Calculator {
             default:
                 break;
         }
-        console.log(this.currentValue);
-        this.$valueInput.value = String(this.currentValue);
+        this.currentInput = String(this.currentValue);
+        this.updateValueInput();
     }
     onAdd() {
-        this.currentValue = Number(this.currentInput);
-        this.isNumberEntry = false;
         this.currentOperation = "+" /* Add */;
     }
     onSubtract() {
-        this.currentValue = Number(this.currentInput);
-        this.isNumberEntry = false;
         this.currentOperation = "-" /* Subtract */;
     }
     onDivide() {
-        this.currentValue = Number(this.currentInput);
-        this.isNumberEntry = false;
         this.currentOperation = "/" /* Divide */;
     }
     onMultiply() {
-        this.currentValue = Number(this.currentInput);
-        this.isNumberEntry = false;
         this.currentOperation = "*" /* Multiply */;
     }
     onEquals() {
         this.currentOperation = "=" /* Equals */;
-        this.evaluate();
     }
 }
+__decorate([
+    Calculation
+], Calculator.prototype, "onAdd", null);
+__decorate([
+    Calculation
+], Calculator.prototype, "onSubtract", null);
+__decorate([
+    Calculation
+], Calculator.prototype, "onDivide", null);
+__decorate([
+    Calculation
+], Calculator.prototype, "onMultiply", null);
+__decorate([
+    Calculation
+], Calculator.prototype, "onEquals", null);
 const onLoad = () => {
     const $container = document.getElementById('container');
     if (!$container) {

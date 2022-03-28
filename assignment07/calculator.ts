@@ -6,16 +6,58 @@ const enum Operation {
   Equals = '='
 }
 
+function Calculation(target: Calculator, key: string, descriptor: any) {
+  const originalOperation = descriptor.value;
+  descriptor.value = function(...args: any[]) {
+    console.log(key);
+    console.log(this.currentInput, this.currentValue, this.currentOperation);
+    if (this.currentOperation !== Operation.Equals) {
+      this.evaluate();
+    }
+    
+    this.currentValue = Number(this.currentInput);
+    this.isNumberEntry = false;
+    return originalOperation.apply(this, args);
+  }
+  return descriptor;
+}
+
 class Calculator {
   private currentValue = 0;
-  private currentInput = '';
+  private currentInput = '0';
   private currentOperation = Operation.Equals;
-  private isNumberEntry = true;
+  private isNumberEntry = false;
   private $valueInput: HTMLInputElement;
   constructor(private $container: HTMLElement) {
     this.$valueInput = this.$container.querySelector('input') as HTMLInputElement;
     this.initOperators();
     this.initNumbers();
+    this.initClearButton();
+  }
+
+  updateValueInput() {
+    this.$valueInput.value = this.currentInput;
+  }
+
+  clear() {
+    this.currentInput = '0';
+    this.currentValue = 0;
+    this.currentOperation = Operation.Equals;
+    this.isNumberEntry = false;
+    this.updateValueInput();
+  }
+
+  initClearButton() {
+    const $clearButton = document.getElementById('button-clear');
+    if (!$clearButton) {
+      console.log('Clear button not found!');
+      return;
+    }
+    $clearButton.addEventListener('click', () => {
+      console.log('clear button click');
+      this.clear();
+    });
+    
   }
 
   initOperators() {
@@ -48,7 +90,7 @@ class Calculator {
           break;
         case Operation.Equals:
           $button.addEventListener('click', () => {
-            this.evaluate();
+            this.onEquals();
           });
           break;
       }
@@ -73,17 +115,12 @@ class Calculator {
           this.currentInput = $button.innerHTML;
           this.isNumberEntry = true;
         }
-        this.updateCurrentValue();
+        this.updateValueInput();
       });
     });
   }
 
-  updateCurrentValue() {
-    this.$valueInput.value = this.currentInput;
-  }
-
   evaluate() {
-    console.log(this.currentInput, this.currentValue, this.currentOperation);
     switch (this.currentOperation) {
       case Operation.Add:
         this.currentValue += Number(this.currentInput);
@@ -100,37 +137,33 @@ class Calculator {
       default:
         break;
     }
-    console.log(this.currentValue);
-    this.$valueInput.value = String(this.currentValue);
+    this.currentInput = String(this.currentValue);
+    this.updateValueInput();
   }
 
+  @Calculation
   onAdd() {
-    this.currentValue = Number(this.currentInput);
-    this.isNumberEntry = false;
     this.currentOperation = Operation.Add;
   }
 
+  @Calculation
   onSubtract() {
-    this.currentValue = Number(this.currentInput);
-    this.isNumberEntry = false;
     this.currentOperation = Operation.Subtract;
   }
 
+  @Calculation
   onDivide() {
-    this.currentValue = Number(this.currentInput);
-    this.isNumberEntry = false;
     this.currentOperation = Operation.Divide;
   }
 
+  @Calculation
   onMultiply() {
-    this.currentValue = Number(this.currentInput);
-    this.isNumberEntry = false;
     this.currentOperation = Operation.Multiply;
   }
 
+  @Calculation
   onEquals() {
     this.currentOperation = Operation.Equals;
-    this.evaluate();
   }
 }
 
