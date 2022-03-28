@@ -9,8 +9,6 @@ const enum Operation {
 function Calculation(target: Calculator, key: string, descriptor: any) {
   const originalOperation = descriptor.value;
   descriptor.value = function(...args: any[]) {
-    console.log(key);
-    console.log(this.currentInput, this.currentValue, this.currentOperation);
     if (this.currentOperation !== Operation.Equals) {
       this.evaluate();
     }
@@ -18,6 +16,16 @@ function Calculation(target: Calculator, key: string, descriptor: any) {
     this.currentValue = Number(this.currentInput);
     this.isNumberEntry = false;
     return originalOperation.apply(this, args);
+  }
+  return descriptor;
+}
+
+function UpdateValue(target: Calculator, key: string, descriptor: any) {
+  const originalOperation = descriptor.value;
+  descriptor.value = function(...args: any[]) {
+    originalOperation.apply(this, args);
+    this.currentInput = String(this.currentValue);
+    this.updateValueInput();
   }
   return descriptor;
 }
@@ -33,18 +41,31 @@ class Calculator {
     this.initOperators();
     this.initNumbers();
     this.initClearButton();
+    this.initPlusMinus();
+    this.initPercent();
   }
 
   updateValueInput() {
     this.$valueInput.value = this.currentInput;
   }
 
+  @UpdateValue
   clear() {
-    this.currentInput = '0';
     this.currentValue = 0;
     this.currentOperation = Operation.Equals;
     this.isNumberEntry = false;
-    this.updateValueInput();
+  }
+
+  @UpdateValue
+  togglePlusMinus() {
+    this.currentValue = Number(this.currentInput);
+    this.currentValue = -this.currentValue;
+  }
+
+  @UpdateValue
+  percentage() {
+    this.currentValue = Number(this.currentInput);
+    this.currentValue = this.currentValue / 100;
   }
 
   initClearButton() {
@@ -54,10 +75,30 @@ class Calculator {
       return;
     }
     $clearButton.addEventListener('click', () => {
-      console.log('clear button click');
       this.clear();
     });
-    
+  }
+
+  initPlusMinus() {
+    const $plusMinusButton = document.getElementById('button-plusminus');
+    if (!$plusMinusButton) {
+      console.log('Plus-Minus button not found!');
+      return;
+    }
+    $plusMinusButton.addEventListener('click', () => {
+      this.togglePlusMinus();
+    });
+  }
+
+  initPercent() {
+    const $percentButton = document.getElementById('button-percent');
+    if (!$percentButton) {
+      console.log('Percent button not found!');
+      return;
+    }
+    $percentButton.addEventListener('click', () => {
+      this.percentage();
+    });
   }
 
   initOperators() {
@@ -97,6 +138,21 @@ class Calculator {
     });
   }
   
+  onNumberClick(number: string) {
+    const $operatorButtons = this.$container.querySelector('.buttons-operators');
+    if (!$operatorButtons) {
+      throw new Error('Operator buttons not found!')
+    }
+
+    if (this.isNumberEntry) {
+      this.currentInput += number;
+    } else {
+      this.currentInput = number;
+      this.isNumberEntry = true;
+    }
+    this.updateValueInput();
+  }
+
   initNumbers() {
     const $numberButtons = this.$container.querySelector('.buttons-numbers');
     if (!$numberButtons) {
@@ -104,22 +160,12 @@ class Calculator {
     }
     $numberButtons.querySelectorAll('button').forEach($button => {
       $button.addEventListener('click', () => {
-        const $operatorButtons = this.$container.querySelector('.buttons-operators');
-        if (!$operatorButtons) {
-          throw new Error('Operator buttons not found!')
-        }
-    
-        if (this.isNumberEntry) {
-          this.currentInput += $button.innerHTML;
-        } else {
-          this.currentInput = $button.innerHTML;
-          this.isNumberEntry = true;
-        }
-        this.updateValueInput();
+        this.onNumberClick($button.innerHTML);
       });
     });
   }
 
+  @UpdateValue
   evaluate() {
     switch (this.currentOperation) {
       case Operation.Add:
@@ -137,8 +183,6 @@ class Calculator {
       default:
         break;
     }
-    this.currentInput = String(this.currentValue);
-    this.updateValueInput();
   }
 
   @Calculation
