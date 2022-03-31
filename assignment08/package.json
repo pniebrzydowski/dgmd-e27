@@ -1,0 +1,11 @@
+{
+  "name": "assignment08",
+  "version": "1.0.0",
+  "description": "DGMD E27 Assignment 08 - jQuery & TS together",
+  "main": "main.ts",
+  "author": "Patrick Niebrzydowski",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
+  }
+}

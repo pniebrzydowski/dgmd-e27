@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 16px;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#container button {
+  padding: 8px 16px;
+  appearance: none;
+  background: none;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+#container img {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
