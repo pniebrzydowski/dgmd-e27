@@ -6,10 +6,14 @@ interface BlockInfo {
   readonly quantity: number;
 }
 
+interface GenesisBlockInfo {
+  readonly isGenesisBlock: true;
+}
+
 interface Block {
   index: number;
   current_time: string;
-  info: BlockInfo | string;
+  info: BlockInfo | GenesisBlockInfo;
   nextHash?: string;
   hash?: string;
   computeHash: () => string;
@@ -18,11 +22,7 @@ interface Block {
 class BlockCrypto implements Block {
   hash?: string | undefined;
   
-  constructor(readonly index: number, readonly current_time: string, readonly info: BlockInfo | string, readonly nextHash = " ") {
-    this.index = index;
-    this.current_time = current_time;
-    this.info = info;
-    this.nextHash = nextHash;
+  constructor(readonly index: number, readonly current_time: string, readonly info: BlockInfo | GenesisBlockInfo, readonly nextHash = " ") {
     this.hash = this.computeHash();
   }
   computeHash() {
@@ -37,7 +37,7 @@ class Blockchain {
     this.block1chain = [this.initGenesisBlock()];
   }
   initGenesisBlock() {
-    return new BlockCrypto(0, "06/04/2021", "Initial Block in the Chain", "0");
+    return new BlockCrypto(0, "06/04/2021", {isGenesisBlock: true}, "0");
   }
   latestBlock() {
     return this.block1chain[this.block1chain.length - 1];

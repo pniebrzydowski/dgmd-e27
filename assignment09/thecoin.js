@@ -10,10 +10,6 @@ class BlockCrypto {
         this.current_time = current_time;
         this.info = info;
         this.nextHash = nextHash;
-        this.index = index;
-        this.current_time = current_time;
-        this.info = info;
-        this.nextHash = nextHash;
         this.hash = this.computeHash();
     }
     computeHash() {
@@ -25,7 +21,7 @@ class Blockchain {
         this.block1chain = [this.initGenesisBlock()];
     }
     initGenesisBlock() {
-        return new BlockCrypto(0, "06/04/2021", "Initial Block in the Chain", "0");
+        return new BlockCrypto(0, "06/04/2021", { isGenesisBlock: true }, "0");
     }
     latestBlock() {
         return this.block1chain[this.block1chain.length - 1];
