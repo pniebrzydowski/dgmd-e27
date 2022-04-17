@@ -88,7 +88,7 @@ var chat = {
     chat.ewrap.appendChild(row);
 
     // AUTO SCROLL TO BOTTOM MAY NOT BE THE BEST...
-    window.scrollTo(0, document.body.scrollHeight);
+    chat.ewrap.scrollTo(0, document.body.scrollHeight);
   },
 };
 window.addEventListener("DOMContentLoaded", chat.init);

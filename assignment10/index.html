@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>WebSockets Chat Application: DGMD E-27 Module 10 Assignment - Patrick Niebrzydowski</title>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+  </head>
   <body>
     <!-- (B) CHAT FORM -->
-    <form id="chatForm">
-      <input id="chatMsg" type="text" required disabled />
-      <button id="chatGo" type="submit" disabled>Send</button>
-    </form>
+    <div id="chatContainer">
+      <form id="chatForm">
+        <input id="chatMsg" type="text" required disabled />
+        <button id="chatGo" type="submit" disabled>Send</button>
+      </form>
 
-    <!-- (A) CHAT HISTORY -->
-    <div id="chatShow"></div>
-
-    <script src="client.js"></script>
+      <!-- (A) CHAT HISTORY -->
+      <div id="chatShow"></div>
+    </div>
+    <script src="./client.js"></script>
   </body>
 </html>

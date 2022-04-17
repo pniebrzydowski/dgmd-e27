@@ -1,0 +1,50 @@
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 16px;
+  height: calc(100% - 32px);
+}
+#chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+#chatForm {
+  display: flex;
+}
+
+#chatForm input {
+  width: 100%;
+  margin-right: 16px;
+}
+
+#chatForm input,
+#chatForm button {
+  padding: 4px 8px;
+}
+
+#chatShow {
+  margin-top: 24px;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.chatRow {
+  padding: 4px;
+}
+
+.chatRow + .chatRow {
+  margin-top: 8px;
+}
+
+.chatRow:nth-child(2n) {
+  background: #eee;
+}
+
+.chatName {
+  font-size: 0.8rem;
+}
