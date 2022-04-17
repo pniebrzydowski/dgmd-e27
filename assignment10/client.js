@@ -66,10 +66,12 @@ var chat = {
       msg = chat.emsg.value;
       chat.emsg.value = "";
     }
+    const date = new Date();
     chat.socket.send(
       JSON.stringify({
         name: chat.name,
         msg: msg,
+        date: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
       })
     );
     return false;
@@ -84,7 +86,7 @@ var chat = {
     // (D2) CREATE NEW ROW
     let row = document.createElement("div");
     row.className = "chatRow";
-    row.innerHTML = `<div class="chatName">${msg["name"]}</div> <div class="chatMsg">${msg["msg"]}</div>`;
+    row.innerHTML = `<div class="chatName">${msg.name} <span class="chatDate">${msg.date}<span></div> <div class="chatMsg">${msg.msg}</div>`;
     chat.ewrap.appendChild(row);
 
     // AUTO SCROLL TO BOTTOM MAY NOT BE THE BEST...

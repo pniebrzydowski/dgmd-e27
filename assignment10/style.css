@@ -48,3 +48,9 @@ body {
 .chatName {
   font-size: 0.8rem;
 }
+
+.chatDate {
+  font-style: italic;
+  margin-left: 8px;
+  color: #555;
+}
