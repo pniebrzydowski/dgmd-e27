@@ -3,10 +3,12 @@ const GuessResult = ({ lastGuess, characterToGuess }) => {
     return null;
   }
 
-  <p>
-    Your guess&mdash;<em>{lastGuess}</em>&mdash;is{" "}
-    {lastGuess === characterToGuess ? "correct!" : "incorrect"}
-  </p>;
+  return (
+    <p>
+      Your guess&mdash;<em>{lastGuess}</em>&mdash;is{" "}
+      {lastGuess === characterToGuess ? "correct!" : "incorrect"}
+    </p>
+  );
 };
 
 export default GuessResult;

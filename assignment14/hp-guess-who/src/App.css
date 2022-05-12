@@ -4,7 +4,7 @@ ul {
   margin: 0;
 }
 
-.characterSelect button {
+.characterSelect li button {
   cursor: pointer;
   text-align: left;
   width: 200px;

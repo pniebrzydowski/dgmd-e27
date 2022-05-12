@@ -69,7 +69,7 @@ const Game = () => {
     setNumberOfGuesses(0);
     setLastGuess(null);
     const idx = getRandomNumber(1, characters.length);
-    setCharacterToGuess(characters[idx]);
+    setCharacterToGuess([...characters][idx]);
   };
 
   return (
