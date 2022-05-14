@@ -1,7 +1,60 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 16px;
+  min-height: 100%;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 12px;
+}
+
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+button {
+  padding: 4px 8px;
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.layout {
+  display: flex;
+  height: 100%;
+}
+
+.game-input input {
+  padding: 4px 8px;
+  width: 240px;
+}
+
+.game-input [role="combobox"] {
+  white-space: nowrap;
+}
+
+.game-output {
+  margin-left: 32px;
+  width: 100%;
+}
+
+.characterInfo {
+  background-color: rgb(235, 212, 212);
+  padding: 16px;
+  width: 100%;
+  border-radius: 11px;
+  margin-bottom: 24px;
+}
+
+.characterSelect {
+  margin-top: 16px;
 }
 
 .characterSelect li button {
@@ -9,12 +62,23 @@ ul {
   text-align: left;
   width: 200px;
   margin: 4px;
-  padding: 4px 8px;
-  appearance: none;
-  background: none;
-  border: 0;
 }
 
 .characterSelect button:hover {
   background: #eee;
+}
+
+.button-newGame {
+  background: #900;
+  color: #fff;
+  padding: 8px 16px;
+}
+.button-newGame:hover {
+  background-color: #600;
+}
+.button-showMe {
+  color: #900;
+}
+.button-showMe:hover {
+  color: #600;
 }

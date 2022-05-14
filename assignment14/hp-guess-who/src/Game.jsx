@@ -72,29 +72,49 @@ const Game = () => {
     setCharacterToGuess([...characters][idx]);
   };
 
+  const giveUp = () => {
+    setLastGuess(characterToGuess);
+  };
+
   return (
-    <>
+    <div className="layout">
+      <section className="game-input">
+        {(!characterToGuess || isCharacterGuessed) && (
+          <button type="button" className="button-newGame" onClick={startGame}>
+            Start a New Game
+          </button>
+        )}
+
+        {characters.length > 0 && characterToGuess && (
+          <CharacterSelect characters={characters} onSelect={guessCharacter} />
+        )}
+      </section>
+
       {characterToGuess && (
-        <section>
-          <CharacterInfo character={characterToGuess} />
-          <GuessResult
-            lastGuess={lastGuess?.name}
-            characterToGuess={characterToGuess?.name}
+        <section className="game-output">
+          <CharacterInfo
+            character={characterToGuess}
+            showPersonalInfo={isCharacterGuessed}
+            cluesToShow={numberOfGuesses + 1}
           />
+          {!isCharacterGuessed && (
+            <GuessResult
+              lastGuess={lastGuess?.name}
+              characterToGuess={characterToGuess?.name}
+            />
+          )}
           <NumberOfGuesses number={numberOfGuesses} />
+          {!isCharacterGuessed && (
+            <p>
+              Give up?{" "}
+              <button onClick={giveUp} className="button-showMe">
+                Show me the answer!
+              </button>
+            </p>
+          )}
         </section>
       )}
-
-      {(!characterToGuess || isCharacterGuessed) && (
-        <button type="button" onClick={startGame}>
-          Start a New Game
-        </button>
-      )}
-
-      {characters.length > 0 && characterToGuess && (
-        <CharacterSelect characters={characters} onSelect={guessCharacter} />
-      )}
-    </>
+    </div>
   );
 };
 

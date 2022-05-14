@@ -5,7 +5,7 @@ const GuessResult = ({ lastGuess, characterToGuess }) => {
 
   return (
     <p>
-      Your guess&mdash;<em>{lastGuess}</em>&mdash;is{" "}
+      Your last guess&mdash;<em>{lastGuess}</em>&mdash;was{" "}
       {lastGuess === characterToGuess ? "correct!" : "incorrect"}
     </p>
   );
